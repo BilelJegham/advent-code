@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "aoc": "aoc",
-    "start": "aoc start js"
+    "start": "aoc start templates/js",
+    "start-php": "aoc start templates/php" 
   },
   "author": "",
   "license": "ISC",
