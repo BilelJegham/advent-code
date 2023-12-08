@@ -1,0 +1,17 @@
+{
+  "name": "advent",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "aoc": "aoc",
+    "start": "aoc start js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@jakzo/aoc": "^1.2.0",
+    "eslint": "^8.55.0",
+    "eslint-config-standard": "^17.1.0"
+  }
+}
