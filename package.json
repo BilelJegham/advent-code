@@ -6,7 +6,8 @@
   "scripts": {
     "aoc": "aoc",
     "start": "aoc start templates/js",
-    "start-php": "aoc start templates/php" 
+    "start-php": "aoc start templates/php" ,
+    "start-python": "aoc start python" 
   },
   "author": "",
   "license": "ISC",

@@ -4,4 +4,3 @@ const input = require('fs')
 
 let result = 0
 console.log({ result })
-//GELP
