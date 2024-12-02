@@ -1,43 +1,34 @@
-const { exit } = require('process');
-
 const input = require('fs')
   .readFileSync(require('path').join(__dirname, 'input.txt'), 'utf8')
   .trim().split('\n')
-  
 
-  const toAdd = [];
 
-  for (let line of input) {
-    // replace words with numbers
+const listA = []
+const listB = []
 
-    const newLine = line
-      .replaceAll("one", "o1e")
-      .replaceAll("two", "t2o")
-      .replaceAll("three", "t3e")
-      .replaceAll("four", "f4r")
-      .replaceAll("five", "f5e")
-      .replaceAll("six", "s6x")
-      .replaceAll("seven", "s7n")
-      .replaceAll("eight", "e8t")
-      .replaceAll("nine", "n9e");
+input.forEach((line) => {
+  const [a, b] = line.split('   ')
+  console.log({ a, b })
+  listA.push(+a)
+  listB.push(+b)
+})
 
-    let unit = 0,
-      dec = 0;
+listA.sort()
+listB.sort()
+let result = 0
 
-    // find first digit
-    for (let i = 0; i < newLine.length; i++) {
-      if (newLine[i] >= "0" && newLine[i] <= "9") {
-        dec = newLine[i];
-        break;
-      }
+const countInList = (list, value) => {
+  let count = 0
+  for (let i = 0; i < list.length; i++) {
+    if (list[i] === value) {
+      count++
     }
-
-    for (let i = newLine.length - 1; i >= 0; i--) {
-      if (newLine[i] >= "0" && newLine[i] <= "9") {
-        unit = newLine[i];
-        break;
-      }
-    }
-    toAdd.push(parseInt(dec) * 10 + parseInt(unit));
   }
-  console.log(toAdd.reduce((a, b) => a + b, 0));
+  return count
+}
+
+for (let i = 0; i < listA.length; i++) {
+  result += listA[i]*countInList(listB, listA[i])
+}
+
+console.log(result)
