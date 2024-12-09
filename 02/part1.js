@@ -2,38 +2,27 @@ const input = require('fs')
   .readFileSync(require('path').join(__dirname, 'input.txt'), 'utf8')
   .trim().split('\n')
 
+let result = 0
 
-const CONDITION = {
-  "red": 12,
-  'green': 13,
-  'blue': 14
-}
-valid = 0
-for(line of input){
-  [libelle,game] = line.split(': ')
+input.forEach((line, index) => {
+  numbers = line.split(' ').map((n)=> +n)
 
-  lances = game.split(';')
   try{
-
-
-
-    for(lance of lances){
-      boules = lance.trim().split(',')
-      for(boule of boules){
-
-        const [number, couleur] = boule.trim().split(' ')
-
-        if(+number > CONDITION[couleur] ){
-          throw new Error('MAX');
-        }
-
-      }
+    let sign;
+  for(let i = 0; i < numbers.length-1; i++) {
+    const sum = Math.abs(numbers[i+1]-numbers[i])
+    const tempSign = Math.sign(numbers[i+1]-numbers[i])
+    if(!sign && sum !==0){
+      sign = Math.sign(numbers[i+1]-numbers[i])
     }
-    valid += parseInt(libelle.match(/\d+/)[0])
-    }catch(e){
-      console.log(parseInt(libelle.match(/\d+/)[0]))
+    if(sum > 3 || tempSign !== sign) {
+      throw new Error(`Invalid  line ${index} ${sum} ${tempSign !== sign}`)
     }
-
-
   }
-console.log({ result:  valid })
+} catch(e) {
+    console.error(e.message, numbers)
+    result++
+  }
+})
+
+console.log({len: input.length,  result: input.length - result})
