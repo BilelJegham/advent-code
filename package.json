@@ -4,15 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "aoc": "aoc",
-    "start": "aoc start templates/js",
-    "start-php": "aoc start templates/php" ,
-    "start-python": "aoc start python" 
+    "aoc": "./aoc-linux-x64",
+    "start": "./aoc-linux-x64 start templates/js",
+    "start-php": "./aoc-linux-x64 start templates/php" ,
+    "start-python": "./aoc-linux-x64 start python" 
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@jakzo/aoc": "^1.2.0",
     "eslint": "^8.55.0",
     "eslint-config-standard": "^17.1.0"
   }

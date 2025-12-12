@@ -1,19 +1,25 @@
 const input = require('fs')
   .readFileSync(require('path').join(__dirname, 'input.txt'), 'utf8')
-  .trim()
+  .trim().split('\n').map((line) => {
+    
+   const numbers= line.split('').map(Number)
+  
+   let firstMax = Math.max(...numbers)
+   let indexOfFirstMax = numbers.indexOf(firstMax)
+   if(indexOfFirstMax === numbers.length -1){
+    const clondedNumbers = [...numbers]
+    clondedNumbers.splice(indexOfFirstMax, 1)
+    firstMax = Math.max(...clondedNumbers)
+    indexOfFirstMax = numbers.indexOf(firstMax)
+   }
+    
 
-  // ignore not number characters and "mul" and ( and )
-const inputClear = input
-.matchAll(/mul\((\d+),(\d+)\)/g)
+   const numbersWithoutFirstMax = numbers.slice(indexOfFirstMax+1)
 
+    const lastMax = Math.max(...numbersWithoutFirstMax)
 
+      return Number(String(firstMax)+String(lastMax))
+   
+  }).reduce((a,b) => a+b,0)
 
-let result = 0
-for (const match of inputClear) {
-  console.log(Number(match[1]), Number(match[2]))
-  result += (Number(match[1]) * Number(match[2]))
-}
-
-
-
-console.log({ result })
+console.log({ input })

@@ -1,28 +1,27 @@
 const input = require('fs')
   .readFileSync(require('path').join(__dirname, 'input.txt'), 'utf8')
-  .trim().split('\n')
+  .trim().split(',').map((ids)=> ids.split('-').map(Number))
 
-let result = 0
 
-input.forEach((line, index) => {
-  numbers = line.split(' ').map((n)=> +n)
+  const hasTwiceChar = (str) => {
+    if(str.length % 2 !== 0) return false
 
-  try{
-    let sign;
-  for(let i = 0; i < numbers.length-1; i++) {
-    const sum = Math.abs(numbers[i+1]-numbers[i])
-    const tempSign = Math.sign(numbers[i+1]-numbers[i])
-    if(!sign && sum !==0){
-      sign = Math.sign(numbers[i+1]-numbers[i])
-    }
-    if(sum > 3 || tempSign !== sign) {
-      throw new Error(`Invalid  line ${index} ${sum} ${tempSign !== sign}`)
-    }
+    const part1 = str.slice(0, Math.floor(str.length / 2))
+    const part2 = str.slice(Math.ceil(str.length / 2))
+    return part1 === part2
   }
-} catch(e) {
-    console.error(e.message, numbers)
-    result++
-  }
-})
 
-console.log({len: input.length,  result: input.length - result})
+
+  let result = 0
+  for (const [a, b] of input) {
+    let cpt = a
+    while (cpt <= b) {
+      if(hasTwiceChar(String(cpt))) {
+        result+= cpt
+      }
+      cpt++
+    }
+
+  }
+
+console.log({ result })

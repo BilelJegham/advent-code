@@ -1,26 +1,32 @@
 const input = require('fs')
   .readFileSync(require('path').join(__dirname, 'input.txt'), 'utf8')
-  .trim()
+  .trim().split('\n').map((line) => {
+    
+    const numbers= line.split('').map(Number)
+
+    const max12Numbers = [...numbers].map((value, index)=>{
+      return { value, index }
+    })
+    
+
+    let maxLength = 12
+    let prevIndex = -1
+
+    let max= ""
+    while(maxLength >0 || max.length <12) {
+      const findMax = [...max12Numbers].filter(({ index }) => (numbers.length - maxLength)>= index && index > prevIndex)
+        .sort((a,b) => b.value - a.value)[0]
+
+         if(!findMax) break;
+      max += findMax.value
+      prevIndex = findMax.index
+      maxLength--
+    }
+    console.log({ max })
+
+    return Number(max)
 
 
-  // ignore not number characters and "mul" and ( and )
-const inputClear = input
-.matchAll(/don't\(\)|mul\((\d+),(\d+)\)|do\(\)/g)
+  }).reduce((a,b) => a+b,0)
 
-
-let result = 0
-let allow = true
-for (const match of inputClear) {
-  if(match[0] === "don't()") 
-    allow = false
-  if(match[0] === "do()")
-    allow = true
-
-  if(allow && match[1]) 
-    result += (Number(match[1]) * Number(match[2]))
-
-}
-
-
-
-console.log({ result })
+console.log({ input })

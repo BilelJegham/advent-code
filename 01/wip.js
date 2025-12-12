@@ -1,34 +1,42 @@
+const { cp } = require('fs');
+
 const input = require('fs')
   .readFileSync(require('path').join(__dirname, 'input.txt'), 'utf8')
   .trim().split('\n')
 
+let result = 50
+let cpt = 0
 
-const listA = []
-const listB = []
 
-input.forEach((line) => {
-  const [a, b] = line.split('   ')
-  console.log({ a, b })
-  listA.push(+a)
-  listB.push(+b)
-})
 
-listA.sort()
-listB.sort()
-let result = 0
+for (const line of input) {
+  const sign= line.slice(0, 1) 
+  const value = +line.slice(1)
 
-const countInList = (list, value) => {
-  let count = 0
-  for (let i = 0; i < list.length; i++) {
-    if (list[i] === value) {
-      count++
-    }
+  const previous = result;
+
+  
+  let numberRolls = 0
+
+  if (sign === 'R') {
+    result = (result + value) % 100
+    numberRolls = Math.floor((value + previous) / 100);
+  }else if (sign === 'L') {
+    result = (result - value) % 100
+    numberRolls = Math.floor((previous - value) / 100);
   }
-  return count
+
+
+   cpt += Math.abs(numberRolls)
+  
+
+
+    
+  console.log({ line, result, sign, value, numberRolls })
+
+  
 }
 
-for (let i = 0; i < listA.length; i++) {
-  result += listA[i]*countInList(listB, listA[i])
-}
 
-console.log(result)
+
+console.log({ result, cpt })

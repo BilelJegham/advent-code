@@ -1,24 +1,29 @@
+
 const input = require('fs')
   .readFileSync(require('path').join(__dirname, 'input.txt'), 'utf8')
   .trim().split('\n')
 
+let result = 50
+let cpt = 0
+for (const line of input) {
+  const sign= line.slice(0, 1)
+  const value = +line.slice(1)
+  if (sign === 'R') {
+    result = (result + value) % 100
+  }else if (sign === 'L') {
+    result = (result - value) % 100
+  }
 
-const listA = []
-const listB = []
 
-input.forEach((line) => {
-  const [a, b] = line.split('   ')
-  console.log({ a, b })
-  listA.push(+a)
-  listB.push(+b)
-})
-
-listA.sort()
-listB.sort()
-let result = 0
-
-for (let i = 0; i < listA.length; i++) {
-  result += Math.abs(listB[i]-listA[i])
+  
+  console.log({ line, result })
+  if(result === 0) { 
+    
+    cpt++
+  }
+  
 }
 
-console.log(result)
+
+
+console.log({ result, cpt })
